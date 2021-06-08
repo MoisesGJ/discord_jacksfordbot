@@ -50,7 +50,7 @@ const applyText = (canvas, text) => {
 
 cl.on('guildMemberAdd', async member => {
     
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'general');
+    const channel = member.guild.channels.cache.find(ch => ch.name === '〚pruebas〛');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -98,9 +98,16 @@ cl.on('guildMemberAdd', async member => {
  });
 
  cl.on('guildMemberRemove', async member => {
-    
-    member.send('Adiós');
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'general');
+    const embedDatos = new disc.MessageEmbed() 
+            .setTitle("Adiós...")
+            .setAuthor("JacKsFord", "https://cdn.discordapp.com/avatars/662537267767803915/d4268e1acf93f73d56969aa03ac45adb.webp")
+            .setFooter("Te quiere la comunidad de JacKsitos :D", "https://i.ibb.co/qg1RsWY/cverde.png")
+            .setColor('#6ABE45')
+            .setDescription('Es una lástima que partas, recuerda que a pesar de todo... siempre tendrás una comunidad para ti.')
+            
+        member.send({ embed: embedDatos });
+
+    const channel = member.guild.channels.cache.find(ch => ch.name === '〚pruebas〛');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -141,25 +148,25 @@ cl.on('guildMemberAdd', async member => {
     channel.send('', attachment);
 });
 
-/*
+
 cl.on("message", message => {
     console.log(message.author.username + ' dijo: ' + message.content);
         
     //PRUEBA DE INGRESO A SERVER
-    if (message.content === '!join') {
+    if (message.content === '!joinpruebadecatalogo') {
 		cl.emit('guildMemberAdd', message.member);
 	}
 
     //PRUEBA DE salida A SERVER
-    if (message.content === '!left') {
+    if (message.content === '!leftpruebadecatalogo') {
 		cl.emit('guildMemberRemove', message.member);
 	}
 
-    if (message.content.toLowerCase() === 'hola') {
-        message.reply('K onda');
+    if (message.content.toLowerCase() === 'ping') {
+        message.reply('pong');
     }
 
-    if (message.content.toLowerCase().startsWith(PREFIX + 'embed')) {
+    if (message.content.toLowerCase().startsWith(PREFIX + 'embedpruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
             .setTitle(":exclamation: Danos una sugerencia :exclamation:")
             .setColor('#6ABE45')
@@ -168,7 +175,7 @@ cl.on("message", message => {
         message.channel.send({ embed: embedDatos });
     }
 
-    if (message.content.toLowerCase().startsWith(PREFIX + 'jacsem')) {
+    if (message.content.toLowerCase().startsWith(PREFIX + 'jacsempruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
             .setTitle("📜 Reglas 📜")
             .setAuthor("JacKsFord", "https://cdn.discordapp.com/avatars/662537267767803915/d4268e1acf93f73d56969aa03ac45adb.webp")
@@ -182,7 +189,7 @@ cl.on("message", message => {
         message.channel.send({ embed: embedDatos });
     }
 
-    if (message.content.toLowerCase().startsWith(PREFIX + 'ayuda')) {
+    if (message.content.toLowerCase().startsWith(PREFIX + 'ayudapruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
             .setTitle("Soporte")
             //.setAuthor(message.author.username, message.author.displayAvatarURL())
@@ -193,7 +200,7 @@ cl.on("message", message => {
         message.channel.send({ embed: embedDatos });
     }
 });
-*/
+
 
 
 /*cl.on("error", (e) => console.error(e));
