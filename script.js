@@ -50,7 +50,7 @@ const applyText = (canvas, text) => {
 
 cl.on('guildMemberAdd', async member => {
     
-    const channel = member.guild.channels.cache.find(ch => ch.name === '〚pruebas〛');
+    const channel = member.guild.channels.cache.find(ch => ch.id === '816196063269486592');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -107,7 +107,7 @@ cl.on('guildMemberAdd', async member => {
             
         member.send({ embed: embedDatos });
 
-    const channel = member.guild.channels.cache.find(ch => ch.name === '〚pruebas〛');
+    const channel = member.guild.channels.cache.find(ch => ch.id === '816196063269486592');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
