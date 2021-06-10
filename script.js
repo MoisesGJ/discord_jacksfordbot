@@ -1,26 +1,23 @@
 const disc = require('discord.js');
 const config = require("./config.json");
 const Canvas = require('canvas');
-const { registerFont, createCanvas } = require('canvas');
+const { registerFont } = require('canvas');
 const fs = require('fs')
 
 const cl = new disc.Client();
-const embed = new disc.MessageEmbed();
 
 
 const TOKEN = config.token;
 const PREFIX = config.prefix;
 
 
-let rules = "Bienvenidos sean al server del canal :D\nLas reglas en Discord son diferentes al del canal por temas más delicados, por favor sigue las siguientes dichas:\n- No mencionar a todos en el chat para evitar spam o malentendidos.\n- Queda prohibido el racismo.\n- No acosar a miembros del servidor, (tampoco insultarlos/molestarlos)  y tampoco por ser nuevos, ni pasar fotos sin su consentimiento.\nTampoco causar peleas entre usuarios.\n- Si pides mute de 1 mes / 6 meses / 1 año etc. tendras que cumplirlas sin excusas de arrepentimiento lo mismo con el ban\n- No se permite hacer spam sin sentido/flood.\n- No se permiten las multicuentas. \n- No pedir rango.\n- Usar los canales correctamente.\n- No publicar contenido NSFW/GORE/MALTRATO ANIMAL/ ABUSO INFANTIL / SUICIDIO / HOMICIDIO / CONTENIDO INAPROPIADO  (AVATAR y/o ESTADOS)- Cualquier falta de respeto a alguien del staff, amigos y familia es ban permanente del servidor\n- No hacer ruidos/sonidos molestos en los canales de voz.\n- No usar comandos de mods \n- No spam de Emotes\n- No molestar a los nuevos catalogados como «randys», es cuestión de strike. \n- No skipear canciones sin consentimiento. (En canales de voz para música)\n- No música troll con los bots.\n- No mandar links en cantidades masivas e inapropiados.\n- No abusar de los bots \n- No ponerse de apodo el mismo que alguien del staff, información personal o n word.";
-
 
 function Presencia() {
     cl.user.setPresence({
         status: "online",
         activity: {
-           name: "los besos con jacsfor",
-           type: "PLAYING"
+           name: "twitch.tv/JacKsFord01",
+           type: "WATCHING"
         }
      });
 }
@@ -35,7 +32,6 @@ cl.on("ready", () => {
 const applyText = (canvas, text) => {
 	const context = canvas.getContext('2d');
 
-	// Declare a base size of the font
 	let fontSize = 70;
 
 	do {
@@ -50,7 +46,7 @@ const applyText = (canvas, text) => {
 
 cl.on('guildMemberAdd', async member => {
     
-    const channel = member.guild.channels.cache.find(ch => ch.id === '816196063269486592');
+    const channel = member.guild.channels.cache.find(ch => ch.name === 'pruebas');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -107,7 +103,7 @@ cl.on('guildMemberAdd', async member => {
             
         member.send({ embed: embedDatos });
 
-    const channel = member.guild.channels.cache.find(ch => ch.id === '816196063269486592');
+    const channel = member.guild.channels.cache.find(ch => ch.name === 'pruebas');
 	if (!channel) return;
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -149,22 +145,107 @@ cl.on('guildMemberAdd', async member => {
 });
 
 
+function cambiarValor(array, valorABuscar, valorViejo, valorNuevo) {
+    array.forEach(function (elemento) { // recorremos el array
+    
+       //asignamos el valor del elemento dependiendo del valor a buscar, validamos que el valor sea el mismo y se reemplaza con el nuevo. 
+      elemento[valorABuscar] = elemento[valorABuscar] == valorViejo ? valorNuevo : elemento[valorABuscar]
+    });
+    return array;
+}
+  
+
 cl.on("message", message => {
     console.log(message.author.username + ' dijo: ' + message.content);
         
+    const user = `${message.author}`;
+
     //PRUEBA DE INGRESO A SERVER
-    if (message.content === '!joinpruebadecatalogo') {
+    if (message.content === '!join') {
 		cl.emit('guildMemberAdd', message.member);
 	}
 
     //PRUEBA DE salida A SERVER
-    if (message.content === '!leftpruebadecatalogo') {
+    if (message.content === '!left') {
 		cl.emit('guildMemberRemove', message.member);
 	}
 
-    if (message.content.toLowerCase() === 'ping') {
-        message.reply('pong');
+    if (message.content.toLowerCase().includes('!ac ')) {
+        //■aggcom
+
+        try {
+            const txt = fs.readFileSync('./comandos.json', 'utf8');
+            var objg = JSON.parse(txt); 
+
+            var can = objg["Datos"][0]["Cantidad"];
+            var cantn = (parseInt(can)+1);
+            
+           // console.log(cantn);
+
+            //const rg = '"Contenido":\[([^]*)\]';
+            var newConten = txt.match(/"Contenido":\[([^]*)\]/g);
+            console.log(newConten);
+
+            let ncon = newConten[0].replace(/"Contenido":\[/g, "");
+            ncon = ncon.replace(']', '');
+            let ncona = ncon.replace("'", "");
+
+
+            var Data = {"Datos":[{"Cantidad":`${cantn}`}],"Contenido":[`${ncona}`]};
+
+           
+                //\[([^]*)\]  [^{\}]+(?=})
+            //let dat = JSON.parse(Data)    
+            console.log(Data)
+
+            fs.writeFileSync('./comandos.json', JSON.parse(Data));
+            
+
+
+            let cmmq = message.content.split(" ");
+
+            let nllam = cmmq[1];
+
+            let ncont = message.content.replace(/!ac /g, "");
+            ncont = ncont.replace(nllam+" ", "");
+
+            let ncom = {
+                Comando: {
+                    Llamada: `${nllam}`,
+                    Respuesta: `${ncont}`
+                }                             
+            };
+
+            fs.readFile('./comandos.json', 'utf8', (err, data) => {
+                if (err) {
+                    console.log("ERROR:", err)
+                    return
+                }
+            
+                obj = JSON.parse(data); 
+                obj.Contenido.push(ncom); 
+                json = JSON.stringify(obj); 
+                fs.writeFile('./comandos.json', json, function (err) {
+                    if (err) return console.log(err);
+                    console.log('Añad OK');
+                });
+        });
+
+          } catch (err) {
+            console.error(err);
+          }
+          
+
+    
+    
+        
+
+        
+
+        
     }
+
+    /*
 
     if (message.content.toLowerCase().startsWith(PREFIX + 'embedpruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
@@ -198,7 +279,48 @@ cl.on("message", message => {
             .setFooter("Añadido por "+message.author.username, message.author.displayAvatarURL())
 
         message.channel.send({ embed: embedDatos });
+    }*/
+
+    if (message.content.toLowerCase()  === 'hola') {
+        message.react('👋');
+        //message.react(message.guild.emojis.cache.get('c9fa5a58142d229cf34ed71b0c213384'));
     }
+
+        try {
+            const data = fs.readFileSync('./comandos.json', 'utf8');
+
+            dataa = JSON.parse(data);
+            
+            
+          } catch (err) {
+            console.error(err);
+          }
+          
+
+    
+    var cant = dataa["Datos"][0]["Cantidad"];
+    
+    for (let i = 0; i <= (parseInt(cant) - 1); i++) {
+        var comm = dataa["Contenido"][i]["Comando"]["Llamada"];
+
+        if (message.content.toLowerCase() === comm) {
+            
+            var resp = dataa["Contenido"][i]["Comando"]["Respuesta"];
+
+            let respuest;
+
+            if (resp.includes('{user}')) {               
+                respuest = resp.replace('{user}', user);
+            }
+            else {
+                respuest = resp;
+            }
+            
+            message.channel.send(respuest);
+        }
+    }
+     
+    
 });
 
 
