@@ -158,6 +158,7 @@ for (var archi of archv) {
 
 
 cl.on("message", async message => {
+
     if (message.author.bot && message.content === 'Comando creado.') {
         message.delete({ timeout: 5000 })
             .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
@@ -176,18 +177,12 @@ cl.on("message", async message => {
     
     console.log(message.author.username + ' dijo: ' + message.content);
     
-    const user = `${message.author}`;
+    if (message.content.toLowerCase()  === 'hola') {
+        message.react('👋');
+        //message.react(message.guild.emojis.cache.get('c9fa5a58142d229cf34ed71b0c213384'));
+    }
     
-    
-    //PRUEBA DE INGRESO A SERVER
-    if (message.content === '!joina') {
-		cl.emit('guildMemberAdd', message.member);
-	}
 
-    //PRUEBA DE salida A SERVER
-    if (message.content === '!lefta') {
-		cl.emit('guildMemberRemove', message.member);
-	}
 /*
     if (message.content.toLowerCase().startsWith(PREFIX + 'embedpruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
@@ -223,10 +218,6 @@ cl.on("message", async message => {
         message.channel.send({ embed: embedDatos });
     }
 
-    if (message.content.toLowerCase()  === 'hola') {
-        message.react('👋');
-        //message.react(message.guild.emojis.cache.get('c9fa5a58142d229cf34ed71b0c213384'));
-    }
 
     if (message.content.toLowerCase() === '!embedpr') {
         const embedDatos = new disc.MessageEmbed() 
