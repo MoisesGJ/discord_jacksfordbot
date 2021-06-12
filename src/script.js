@@ -1,43 +1,32 @@
-//const disc = require('discord.js');
-const DiscordRPC = require('discord-rpc');
+const disc = require('discord.js');
 const config = require("../config.json");
 const Canvas = require('canvas');
 const { registerFont } = require('canvas');
 const fs = require('fs')
 
-const bot = new DiscordRPC.Client({ transport: 'ipc' });
-//const cl = new disc.Client();
+const cl = new disc.Client();
 
 const TOKEN = config.token;
 const PREFIX = config.prefix;
 
 
-/*function Presencia() {
+function Presencia() {
     cl.user.setPresence({
         status: "online",
         activity: {
+           //name: "twitch.tv/JacKsFord01 || Usa &help",
            name: "twitch.tv/JacKsFord01",
            type: "WATCHING"
         }
      });
-}*/
+}
 
-
-bot.on("ready", () => {
+cl.on("ready", () => {
     console.log("\n|||||||CONECTADO|||||||\n");
 
-    bot.setActivity({      
-        buttons: [{ label: "Twitch", url: "https://www.twitch.tv/jacksford01"}],
-        details: "POWERED BY J3FFRY",
-        //largeImageKey: "jacks_mini",
-        //largeImageText: ":v"
-    }).catch(err => console.log(err));
+    Presencia();
+});
 
-    //Presencia();
-})
-
-bot.login({ clientId:"851533133090521188"});
-/*
 const applyText = (canvas, text) => {
 	const context = canvas.getContext('2d');
 
@@ -85,8 +74,6 @@ cl.on('guildMemberAdd', async member => {
 	context.closePath();
 	context.clip();
 
-
-    console.log(member.user.displayAvatarURL());
 
     const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'jpg' }));
 	context.drawImage(avatar, 25, 25, 200, 200);
@@ -158,18 +145,19 @@ cl.on('guildMemberAdd', async member => {
 
 
 cl.comand = new disc.Collection();
+cl.uso = new disc.Collection();
 let archv = fs.readdirSync('src/coms/').filter((f) => f.endsWith('.js'));
 
 
 for (var archi of archv) {
     let comm = require('./coms/'+archi);
-    cl.comand.set(comm.nombre, comm)
-    console.log(archi + " => TRUE")
+    cl.comand.set(comm.nombre, comm);
+    console.log(archi + " => TRUE");
 }
 
 
 cl.on("message", async message => {
-
+    
     if (message.author.bot && (message.content === '```Comando creado.```' || message.content === '```Ingresa un número entre 2 y 99.```'
         || message.content === '```Mensajes eliminados.```')) {
         message.delete({ timeout: 5000 })
@@ -182,7 +170,7 @@ cl.on("message", async message => {
     let command = args.shift().toLowerCase();
 
     let cmd = cl.comand.get(command) || cl.comand.find((c) => c.alias.includes(command));
-
+    
     if (cmd) {
         cmd.run(cl, message, args);
     }
@@ -190,10 +178,8 @@ cl.on("message", async message => {
     console.log(message.author.username + ' dijo: ' + message.content);
     
     if (message.content.toLowerCase()  === 'hola') {
-        message.react('👋');
-        //message.react(message.guild.emojis.cache.get('c9fa5a58142d229cf34ed71b0c213384'));
+        message.react('👋');       
     }
-    
 
 /*
     if (message.content.toLowerCase().startsWith(PREFIX + 'embedpruebadecatalogo')) {
@@ -244,12 +230,7 @@ cl.on("message", async message => {
    
      
     
-//});
+});
 
 
-
-/*cl.on("error", (e) => console.error(e));
-cl.on("warn", (e) => console.warn(e));
-cl.on("debug", (e) => console.info(e));*/
-
-//cl.login(TOKEN);
+cl.login(TOKEN);

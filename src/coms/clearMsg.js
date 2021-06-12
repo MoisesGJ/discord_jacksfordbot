@@ -1,7 +1,9 @@
 module.exports = {
     nombre: 'elim',
     alias: ['cls'],
-    descripcion: '',
+    uso: '&cls [NÚMERO DE MENSAJES A BORRAR <2-99>]',
+    mod: 'yes',
+    descripcion: 'Utilízame cuando desees eliminar varios mensajes de un canal.',
     run: async (client, message, arg) =>{
         const ndel = parseInt(arg[0], 10);
 

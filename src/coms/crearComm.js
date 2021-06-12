@@ -3,7 +3,9 @@ const fs = require('fs');
 module.exports = {
     nombre: 'aggcom',
     alias: ['ac'],
-    descripcion: '',
+    uso: '&ac [LLAMADA AL COMANDO] [RESPUESTA:{usr} --> arroba de usuario]',
+    mod: 'yes',
+    descripcion: 'Utilízame cuando desees crear un comando.',
     run: (client, message, arg) =>{
         console.log(arg);
 
@@ -17,7 +19,7 @@ module.exports = {
         if (resp.includes('{usr}')) resp = resp.replace('{usr}', message.author);
 
         
-        let baseMsg = "module.exports = {\n\tnombre: '"+`${llam}`+"',\n\talias: [],\n\tdescripcion: '',\n\trun: (client, message, arg) =>{\n\t\treturn message.channel.send('"+`${resp}`+"');\n\t}\n}";
+        let baseMsg = "module.exports = {\n\tnombre: '"+`${llam}`+"',\n\talias: [],\n\tuso: 'default',\n\tmod: 'no',\n\tdescripcion: 'default',\n\trun: (client, message, arg) =>{\n\t\treturn message.channel.send('"+`${resp}`+"');\n\t}\n}";
             
         message.delete({ timeout: 0 })
             .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
