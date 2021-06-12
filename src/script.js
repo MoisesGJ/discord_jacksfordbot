@@ -1,16 +1,18 @@
-const disc = require('discord.js');
+//const disc = require('discord.js');
+const DiscordRPC = require('discord-rpc');
 const config = require("../config.json");
 const Canvas = require('canvas');
 const { registerFont } = require('canvas');
 const fs = require('fs')
 
-const cl = new disc.Client();
+const bot = new DiscordRPC.Client({ transport: 'ipc' });
+//const cl = new disc.Client();
 
 const TOKEN = config.token;
 const PREFIX = config.prefix;
 
 
-function Presencia() {
+/*function Presencia() {
     cl.user.setPresence({
         status: "online",
         activity: {
@@ -18,15 +20,24 @@ function Presencia() {
            type: "WATCHING"
         }
      });
-}
+}*/
 
 
-cl.on("ready", () => {
+bot.on("ready", () => {
     console.log("\n|||||||CONECTADO|||||||\n");
-    Presencia();
+
+    bot.setActivity({      
+        buttons: [{ label: "Twitch", url: "https://www.twitch.tv/jacksford01"}],
+        details: "POWERED BY J3FFRY",
+        //largeImageKey: "jacks_mini",
+        //largeImageText: ":v"
+    }).catch(err => console.log(err));
+
+    //Presencia();
 })
 
-
+bot.login({ clientId:"851533133090521188"});
+/*
 const applyText = (canvas, text) => {
 	const context = canvas.getContext('2d');
 
@@ -159,7 +170,8 @@ for (var archi of archv) {
 
 cl.on("message", async message => {
 
-    if (message.author.bot && message.content === 'Comando creado.') {
+    if (message.author.bot && (message.content === '```Comando creado.```' || message.content === '```Ingresa un número entre 2 y 99.```'
+        || message.content === '```Mensajes eliminados.```')) {
         message.delete({ timeout: 5000 })
             .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
             .catch(console.error);
@@ -169,7 +181,7 @@ cl.on("message", async message => {
     let args = message.content.slice(PREFIX.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
 
-    let cmd = cl.comand.get(command) || cl.comand.find((bus) => bus.alias.includes(command));
+    let cmd = cl.comand.get(command) || cl.comand.find((c) => c.alias.includes(command));
 
     if (cmd) {
         cmd.run(cl, message, args);
@@ -232,7 +244,7 @@ cl.on("message", async message => {
    
      
     
-});
+//});
 
 
 
@@ -240,4 +252,4 @@ cl.on("message", async message => {
 cl.on("warn", (e) => console.warn(e));
 cl.on("debug", (e) => console.info(e));*/
 
-cl.login(TOKEN);
+//cl.login(TOKEN);

@@ -28,7 +28,7 @@ module.exports = {
             console.log('Archivo creado');
             console.log(message.content);
 
-            //return message.channel.send('Comando creado.');
+            return;
         });
                
         
