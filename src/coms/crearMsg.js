@@ -19,14 +19,14 @@ module.exports = {
         
         let baseMsg = "module.exports = {\n\tnombre: '"+`${llam}`+"',\n\talias: [],\n\tdescripcion: '',\n\trun: (client, message, arg) =>{\n\t\treturn message.channel.send('"+`${resp}`+"');\n\t}\n}";
             
+        message.delete({ timeout: 5000 })
+            .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
+            .catch(console.error);
+
         fs.writeFile('src/coms/'+llam+'.js', baseMsg, function (err) {
             if (err) return console.log(err);
             console.log('Archivo creado');
             console.log(message.content);
-
-            message.delete({ timeout: 5000 })
-            .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
-            .catch(console.error);
             
             //return message.channel.send('Comando creado.');
         });
