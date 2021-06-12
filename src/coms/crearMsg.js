@@ -24,12 +24,13 @@ module.exports = {
             console.log('Archivo creado');
             console.log(message.content);
 
-            /*message.delete({ timeout: 5000 })
+            message.delete({ timeout: 5000 })
             .then(msg => console.log(`Mensaje eliminado de ${msg.author.username}`))
-            .catch(console.error);*/
-
+            .catch(console.error);
+            
+            //return message.channel.send('Comando creado.');
         });
                
-        return message.channel.send('Comando creado.');
+        
     }
 }
