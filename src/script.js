@@ -10,6 +10,10 @@ const TOKEN = config.token;
 const PREFIX = config.prefix;
 
 
+const disbut = require('discord-buttons');
+disbut(cl); 
+
+
 function Presencia() {
     cl.user.setPresence({
         status: "online",
@@ -181,6 +185,25 @@ cl.on("message", async message => {
         message.react('👋');       
     }
 
+    //console.log(message)
+    if (message.content.toLowerCase() === '&addsistickets&') {
+        //disbut
+        let btn = new disbut.MessageButton()
+            .setLabel('📩 Contactar')
+            .setStyle('red')
+            .setID('ticket');
+
+
+            const embed = new disc.MessageEmbed() 
+            .setTitle("¿Necesitas ayuda?")
+            .setColor('#6ABE45')
+            .setDescription('Si necesitas contactarte con el equipo de **JacKsitos :D** porque te sientes hostigado o molestado por alguien que no está cumpliendo las normas del servidor o si simplemente quieres hablar de forma directa con el staff:\n**Presiona el botón de abajo para que un moderador pueda atenderte.**\n\n_Cualquier creación que consideremos innecesaria al generar un tique de ayuda será motivo de sanción._')
+            .setTimestamp()
+            .setFooter("Añadido por J3ffry", message.author.displayAvatarURL())   
+
+        message.channel.send({ embed: embed, component: btn })
+    }
+
 /*
     if (message.content.toLowerCase().startsWith(PREFIX + 'embedpruebadecatalogo')) {
         const embedDatos = new disc.MessageEmbed() 
@@ -232,5 +255,58 @@ cl.on("message", async message => {
     
 });
 
+cl.on('clickButton', async (button) => {
+if (button.id === 'ticket') {
+    await button.clicker.fetch();
+
+    let person = button.clicker.user.tag;    
+    let personid = button.clicker.user;
+
+    let evry = button.guild.roles.cache.find(rol => rol.name == '@everyone');    
+
+
+    let name = 'ticket'+person.toLowerCase().replace('#', '');
+
+    let exi = button.guild.channels.cache.find(cn => cn.name === name);
+
+    if (exi) {
+        exi.send(`${button.clicker.user}`+' No puedes crear otro canal, háblanos por aquí.');
+
+        return;
+    } 
+
+    const embd = new disc.MessageEmbed() 
+            .setTitle("En un momento alguien se pondrá al tanto de tu situación")            
+            .setTimestamp()
+            .setFooter("POWERED BY J3ffry", 'https://cdn.discordapp.com/avatars/465953219860889600/a_15e6596eb00dfa4e156c1d32f47ba1ff.webp')   
+            .setColor('RANDOM')
+            .setDescription('¡Hola, '+`${button.clicker.user}`+'!\nEste espacio es seguro y lo que comentes aquí **no se irá a ninguna parte**.\nMientras esperamos a alguien que te brinde apoyo, cuéntame... ¿qué te trae por aquí?')
+
+    button.guild.channels.create(name, {
+        permissionOverwrites: [
+            {
+                id: evry.id,
+                deny: ["VIEW_CHANNEL", "SEND_MESSAGES"]
+            },
+            {
+                id: personid,
+                allow: ["VIEW_CHANNEL", "SEND_MESSAGES"]
+            }
+        ],
+        parent: '816353789656694815'
+    }).then(c => c.send(embd)).then((msg) => {
+
+            msg.awaitReactions((reaction, user) => {
+                if (reaction.emoji.name === '👍') {
+                    msg.channel.delete();
+                }
+            })
+        })
+        .catch(console.error);
+
+        button.defer();
+}
+    
+});
 
 cl.login(TOKEN);
