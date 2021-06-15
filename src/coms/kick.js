@@ -1,7 +1,7 @@
 
 module.exports = {
     nombre: 'kick',
-    alias: ['k'],
+    alias: ['&k'],
     uso: '&k [MENCIÓN DEL USUARIO]',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees sacar a alguien.',

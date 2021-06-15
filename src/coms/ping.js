@@ -1,6 +1,6 @@
 module.exports = {
     nombre: 'ping',
-    alias: ['pg'],
+    alias: ['&pg'],
     uso: '&pg',
     mod: 'no',
     descripcion: 'Utilízame cuando desees saber mi latencia desde mi servidor a discord.',

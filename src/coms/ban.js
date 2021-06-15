@@ -4,7 +4,7 @@ module.exports = {
     uso: '&b [MENCIÓN DEL USUARIO] [RAZÓN:palabra] (tiempo:días:1-7)',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees banear a alguien.',
-    run: (client, message, arg) =>{
+    run: (client, message, arg) => {
         if (message.member.hasPermission("BAN_MEMBERS")) {
             if(!message.mentions.users.first()) {
                 return message.channel.send('Por favor, especifíca un usuario.');
@@ -40,7 +40,5 @@ module.exports = {
         else {
             return message.react(message.guild.emojis.cache.get('816143385625755688'));
         }
-        
     }
-
 }

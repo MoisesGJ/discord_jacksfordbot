@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 module.exports = {
-    nombre: 'aggcom',
-    alias: ['ac'],
+    nombre: 'ag',
+    alias: [',aggcom'],
     uso: '&ac [LLAMADA AL COMANDO] [RESPUESTA:{usr} --> arroba de usuario]',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees crear un comando.',

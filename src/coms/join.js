@@ -1,6 +1,6 @@
 module.exports = {
-    nombre: 'join',
-    alias: ['jn'],
+    nombre: 'jn',
+    alias: [',join'],
     uso: '&jn',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees emular una bienvenida.',

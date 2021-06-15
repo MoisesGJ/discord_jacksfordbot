@@ -1,6 +1,6 @@
 module.exports = {
-    nombre: 'sil',
-    alias: ['s'],
+    nombre: 's',
+    alias: [',sil'],
     uso: '&s [MENCIÓN DEL USUARIO]',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees silenciar a alguien.',

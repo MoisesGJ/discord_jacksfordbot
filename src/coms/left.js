@@ -1,6 +1,6 @@
 module.exports = {
     nombre: 'left',
-    alias: ['lf'],
+    alias: ['&lf'],
     uso: '&lf',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees emular una salida.',

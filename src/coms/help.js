@@ -3,7 +3,7 @@ const fs = require('fs');
 
 module.exports = {
     nombre: 'help',
-    alias: ['h'],
+    alias: [',h'],
     uso: '&h',
     mod: 'no',
     descripcion: 'Con este comando puedes ver los comandos que puedes usar.',

@@ -1,6 +1,6 @@
 module.exports = {
-    nombre: 'elim',
-    alias: ['cls'],
+    nombre: 'cls',
+    alias: [',elim'],
     uso: '&cls [NÚMERO DE MENSAJES A BORRAR <2-99>]',
     mod: 'yes',
     descripcion: 'Utilízame cuando desees eliminar varios mensajes de un canal.',
