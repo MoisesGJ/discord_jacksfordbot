@@ -1,5 +1,5 @@
 module.exports = {
-    nombre: 'jn',
+    nombre: ',jn',
     alias: [',join'],
     uso: '&jn',
     mod: 'yes',
