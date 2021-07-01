@@ -3,6 +3,7 @@ const config = require("../config.json");
 const Canvas = require('canvas');
 const { registerFont } = require('canvas');
 const fs = require('fs')
+const fetch = require("node-fetch");
 
 const cl = new disc.Client();
 
@@ -48,14 +49,14 @@ const applyText = (canvas, text) => {
 
 cl.on('guildMemberAdd', async member => {
 
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'pruebas');
+    const channel = member.guild.channels.cache.find(ch => ch.id === '816089545686253600');
 	if (!channel) return;
 
 
     const canvas = Canvas.createCanvas(700, 250);
 	const context = canvas.getContext('2d');
 
-    const background = await Canvas.loadImage('./src/rec/imgs/wallpaper.jpg');
+    const background = await Canvas.loadImage('./src/rec/imgs/wallpaperazul.jpg');
 	
 	context.drawImage(background, 0, 0, canvas.width, canvas.height);
 	
@@ -99,7 +100,7 @@ cl.on('guildMemberAdd', async member => {
     const embedDM = new disc.MessageEmbed() 
             .setTitle("No le digas a nadie, pero...")            
             .setColor('#6ABE45')                
-            .setDescription('Puedes visitar los canales de '+`${perso}`+' y '+`${reg}`+'. Esto para mejorar tu experiencia en el servidor y con la comunidad en general, agradecemos tu estancia y esperamos que formes parte de JacKsitos :D')
+            .setDescription('Puedes visitar los canales de '+`${perso}`+' y '+`${reg}`+', esto para mejorar tu experiencia en el servidor y con la comunidad en general. Agradecemos tu estancia y esperamos que la pases muy bien en JacKsitos :D')
             .addField("‎      ‏‏‎", "‎Atentamente: ***Administración***")
     
     member.send(embedDM);
@@ -184,6 +185,46 @@ cl.on("message", async message => {
     if (message.content.toLowerCase()  === 'hola') {
         message.react('👋');       
     }
+
+
+    if (message.content.toLowerCase() === "&ytb") {
+        const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
+
+        if (!message.member.voice.channel) return message.channel.send("Para utilizar este comando únete a un canal de voz.");
+
+        if (!message.member.voice.channel.permissionsFor(message.guild.me).has("CREATE_INSTANT_INVITE")) return message.channel.send("❌ | I need `CREATE_INSTANT_INVITE` permission");
+            fetch(`https://discord.com/api/v8/channels/${message.member.voice.channelID}/invites`, {
+                method: "POST",
+                body: JSON.stringify({
+                    max_age: 86400,
+                    max_uses: 0,
+                    target_application_id: "755600276941176913", // youtube together
+                    target_type: 2,
+                    temporary: false,
+                    validate: null
+                }),
+                headers: {
+                    "Authorization": `Bot ${TOKEN}`,
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => res.json())
+                .then(invite => {
+                    if (invite.error || !invite.code) return message.channel.send("❌ No se pudo obtener una invitación a la sala.");
+                    
+                    const embed = new disc.MessageEmbed()
+                        .setDescription(`Inicia youtube en ${message.channel.name} [con este link](https://discord.gg/${invite.code})`); 
+                        //.addField("‎      ‏‏‎", `Inicia youtube en ${message.channel.name} [aquí](https://discord.gg/${invite.code})`);
+                        message.channel.send(embed);
+                })
+                .catch(e => {
+                    message.channel.send("❌ No pudimos iniciar la sala, contacta a uno de los administradores.");
+                    console.log(e);
+                })
+    }
+
+
+
 
     //console.log(message)
     if (message.content.toLowerCase() === '&addsistickets&') {
