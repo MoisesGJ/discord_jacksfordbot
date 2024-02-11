@@ -1,2 +1,2 @@
 # JacKsFord_bot
-## _Un bot para discord_
+## _Un pequeño bot para discord_
